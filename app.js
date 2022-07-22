@@ -1,21 +1,7 @@
-const { readFile, writeFile } = require("fs").promises;
-// const util = require("util");
+const {createReadStream} = require('fs');
 
-// const readFilePromise = util.promisify(readFile);
-// const writeFilePromise = util.promisify(writeFile);
+const stream = createReadStream('./content/big.txt');
 
-const start = async () => {
-  try {
-    const first = await readFile("./content/first.txt", "utf8");
-    const second = await readFile("./content/second.txt", "utf8");
-    await writeFile(
-      "./content/result-mind-grenade.txt",
-      `<h1>This is Awesome :${first} ${second} `, 
-      {flag: 'a'}
-    );
-    console.log(first, second);
-  } catch (error) {
-    console.log(error);
-  }
-};
-start();
+stream.on('data', (result) => {
+  console.log(result);
+})
